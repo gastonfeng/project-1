@@ -1,10 +1,10 @@
 from openerp import tools
-from openerp.osv import fields, orm
+from openerp import fields, models
 
 from ..project_sla_control import SLA_STATES
 
 
-class report_sla(orm.Model):
+class report_sla(models.Model):
     _name = "project.sla.report"
     _description = "Project SLA report"
     _auto = False

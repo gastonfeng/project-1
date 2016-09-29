@@ -18,10 +18,10 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, orm
+from openerp import fields, models
 
 
-class task(orm.Model):
+class task(models.Model):
     _inherit = "project.task"
 
     def _fld_issue_id(self, cr, uid, ids, field, arg, context=None):

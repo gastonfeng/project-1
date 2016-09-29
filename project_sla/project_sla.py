@@ -18,10 +18,10 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, orm
+from openerp import fields, models
 
 
-class SLADefinition(orm.Model):
+class SLADefinition(models.Model):
     """
     SLA Definition
     """
@@ -63,7 +63,7 @@ class SLADefinition(orm.Model):
         return self._reapply_slas(cr, uid, ids, context=context)
 
 
-class SLARules(orm.Model):
+class SLARules(models.Model):
     """
     SLA Definition Rule Lines
     """

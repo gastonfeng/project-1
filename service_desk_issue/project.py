@@ -18,10 +18,10 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, orm
+from openerp import fields, models
 
 
-class ProjectIssue(orm.Model):
+class ProjectIssue(models.Model):
     _inherit = 'project.issue'
 
     _columns = {

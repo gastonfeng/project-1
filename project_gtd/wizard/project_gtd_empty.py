@@ -19,11 +19,11 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, osv
+from openerp import fields, models
 from openerp.tools.translate import _
 
 
-class project_timebox_empty(osv.TransientModel):
+class project_timebox_empty(models.TransientModel):
     _name = 'project.timebox.empty'
     _description = 'Project Timebox Empty'
     _columns = {
@@ -48,7 +48,7 @@ class project_timebox_empty(osv.TransientModel):
 
         ids = obj_tb.search(cr, uid, [], context=context)
         if not len(ids):
-            raise osv.except_osv(
+            raise UserError(
                 _('Error!'), _('No timebox child of this one!'))
         tids = obj_task.search(
             cr, uid, [('timebox_id', '=', context['active_id'])])

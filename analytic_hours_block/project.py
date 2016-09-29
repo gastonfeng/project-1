@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-from osv import orm
+
+from openerp import models
 from openerp.tools.translate import _
 
 
-class project_project(orm.Model):
+class project_project(models.Model):
     _inherit = 'project.project'
 
     def hours_block_tree_view(self, cr, uid, ids, context):
@@ -18,7 +19,7 @@ class project_project(orm.Model):
         if res_ids:
             domain = [('id', 'in', res_ids)]
         else:
-            raise orm.except_orm(_('Warning'), _("No Hours Block for this project"))
+            raise models.except_orm(_('Warning'), _("No Hours Block for this project"))
 
         return  {
             'name': _('Hours Blocks'),

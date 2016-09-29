@@ -18,10 +18,10 @@
 #
 ##############################################################################
 
-from openerp.osv import orm
+from odoo import models
 
 
-class ProjectIssue(orm.Model):
+class ProjectIssue(models.Model):
     """
     Extend Project Issues to be SLA Controlled
     """

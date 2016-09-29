@@ -19,10 +19,10 @@
 #
 ##############################################################################
 
-from openerp.osv import orm, fields
+from openerp import fields, models
 
 
-class AccountHoursBlock(orm.Model):
+class AccountHoursBlock(models.Model):
     _name = "account.hours.block"
     _inherit = ['mail.thread']
 
@@ -415,7 +415,7 @@ class AccountHoursBlock(orm.Model):
 ############################################################################
 ## Add hours blocks on invoice
 ############################################################################
-class AccountInvoice(orm.Model):
+class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
 
     _columns = {
