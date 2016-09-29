@@ -18,10 +18,10 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, orm
+from openerp import fields, models
 
 
-class ProjectProject(orm.Model):
+class ProjectProject(models.Model):
     _inherit = 'project.project'
     _columns = {
         'issue_categ_id': fields.many2one(
@@ -29,7 +29,7 @@ class ProjectProject(orm.Model):
         }
 
 
-class ProjectIssue(orm.Model):
+class ProjectIssue(models.Model):
     _inherit = 'project.issue'
 
     def onchange_project(self, cr, uid, id, project_id, context=None):

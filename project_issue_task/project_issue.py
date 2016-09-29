@@ -18,11 +18,11 @@
 #
 ##############################################################################
 
-from openerp.osv import orm
-from openerp import _
+
+from openerp import _, models
 
 
-class project_issue(orm.Model):
+class project_issue(models.Model):
     _inherit = 'project.issue'
 
     def action_create_task(self, cr, uid, ids, context=None):

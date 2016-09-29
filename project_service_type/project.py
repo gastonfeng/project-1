@@ -28,12 +28,12 @@
 #
 ##############################################################################
 
-from osv import fields
-from osv import osv
+from odoo import fields
+from odoo import models
 
 from tools import config
 
-class project_service_type(osv.osv):
+class project_service_type(models.Model):
     _name = "project.service_type"
     _description = "Service type"
     
@@ -45,7 +45,7 @@ class project_service_type(osv.osv):
 project_service_type()
 
 
-class project_project(osv.osv):
+class project_project(models.Model):
     _inherit = 'project.project'
 
     _columns = {

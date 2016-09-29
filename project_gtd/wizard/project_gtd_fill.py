@@ -19,10 +19,10 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, osv
+from openerp import fields, models
 
 
-class project_timebox_fill(osv.TransientModel):
+class project_timebox_fill(models.TransientModel):
     _name = 'project.timebox.fill.plan'
     _description = 'Project Timebox Fill'
     _columns = {

@@ -19,10 +19,10 @@
 #
 ##############################################################################
 
-from openerp.osv import orm, fields
+from openerp import fields, models
 
 
-class Product(orm.Model):
+class Product(models.Model):
     _name = "product.product"
     _inherit = 'product.product'
 

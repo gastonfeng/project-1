@@ -18,12 +18,12 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, orm
+from openerp import fields, models
 import logging
 _logger = logging.getLogger(__name__)
 
 
-class AnalyticAccount(orm.Model):
+class AnalyticAccount(models.Model):
     """ Add SLA to Analytic Accounts """
     _inherit = 'account.analytic.account'
     _columns = {

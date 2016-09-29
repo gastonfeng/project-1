@@ -18,11 +18,11 @@
 #
 ##############################################################################
 
-from openerp.osv import orm
-from openerp import SUPERUSER_ID
+
+from openerp import SUPERUSER_ID, models
 
 
-class ProjectTask(orm.Model):
+class ProjectTask(models.Model):
     _inherit = 'project.task'
 
     def message_post(

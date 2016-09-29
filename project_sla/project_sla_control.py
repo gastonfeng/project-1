@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, orm
+from openerp import fields, models
 from openerp.tools.safe_eval import safe_eval
 from openerp.tools.misc import DEFAULT_SERVER_DATETIME_FORMAT as DT_FMT
 from openerp import SUPERUSER_ID
@@ -54,7 +54,7 @@ def safe_getattr(obj, dotattr, default=False):
     return obj
 
 
-class SLAControl(orm.Model):
+class SLAControl(models.Model):
     """
     SLA Control Registry
     Each controlled document (Issue, Claim, ...) will have a record here.
@@ -268,7 +268,7 @@ class SLAControl(orm.Model):
         return res
 
 
-class SLAControlled(orm.AbstractModel):
+class SLAControlled(models.AbstractModel):
     """
     SLA Controlled documents: AbstractModel to apply SLA control on Models
     """
