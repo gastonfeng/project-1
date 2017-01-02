@@ -2,38 +2,34 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-===================
-Project Description
-===================
+=========================
+Project Task Dependencies
+=========================
 
-This module extends the functionality of projects to support setting a
-description for each project and allow you to search by that description.
+This module enables the user to define dependencies (other tasks) of a task.
 
 Usage
 =====
 
-To set a description for a project, you need to:
+To use this module, you need to:
 
-* Go to *Project > Project > Projects*.
-* Edit or create one.
-* You will see a new *Description* tab, with an HTML area to set the project's
-  description.
-
-To search for a project by its description, you need to:
-
-* Go to *Project > Project > Projects*.
-* Enter any word in the search box.
-* Select *Search Description*.
+#. Go to a task;
+#. click on 'Dependencies'.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
    :target: https://runbot.odoo-community.org/runbot/140/10.0
 
+Known issues / Roadmap
+======================
+
+* Constraint on stage progression based on the task dependencies
+
 Bug Tracker
 ===========
 
 Bugs are tracked on `GitHub Issues
-<https://github.com/OCA/project/issues>`_. In case of trouble, please
+<https://github.com/OCA/140/issues>`_. In case of trouble, please
 check there if your issue has already been reported. If you spotted it first,
 help us smashing it by providing a detailed and welcomed feedback.
 
@@ -43,8 +39,7 @@ Credits
 Contributors
 ------------
 
-* Rafael Blasco <rafael.blasco@tecnativa.com>
-* Jairo Llopis <jairo.llopis@tecnativa.com>
+* Dennis Sluijk <d.sluijk@onestein.nl>
 
 Maintainer
 ----------

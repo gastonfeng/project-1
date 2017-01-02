@@ -1,6 +1,6 @@
-[![Runbot Status](https://runbot.odoo-community.org/runbot/badge/flat/140/9.0.svg)](https://runbot.odoo-community.org/runbot/repo/github-com-oca-project-140)
-[![Build Status](https://travis-ci.org/OCA/project.svg?branch=9.0)](https://travis-ci.org/OCA/project)
-[![Coverage Status](https://coveralls.io/repos/OCA/project/badge.svg?branch=9.0)](https://coveralls.io/r/OCA/project?branch=9.0)
+[![Runbot Status](https://runbot.odoo-community.org/runbot/badge/flat/140/10.0.svg)](https://runbot.odoo-community.org/runbot/repo/github-com-oca-project-140)
+[![Build Status](https://travis-ci.org/OCA/project.svg?branch=10.0)](https://travis-ci.org/OCA/project)
+[![codecov](https://codecov.io/gh/OCA/project/branch/10.0/graph/badge.svg)](https://codecov.io/gh/OCA/project)
 
 Odoo Project & Service Management
 =================================
@@ -18,9 +18,9 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
-[project_description](project_description/) | 9.0.1.0.0 | Add a description to projects
-[project_double_alias](project_double_alias/) | 9.0.1.0.0 | Define an alias for tasks and another alias for issues
-[project_task_default_stage](project_task_default_stage/) | 9.0.1.0.0 | Recovery default task stage projects from v8
+[project_description](project_description/) | 10.0.1.0.0 | Add a description to projects
+[project_task_default_stage](project_task_default_stage/) | 10.0.1.0.0 | Recovery default task stage projects from v8
+[project_task_dependency](project_task_dependency/) | 10.0.1.0.0 | Enables to define dependencies (other tasks) of a task
 
 Unported addons
 ---------------
@@ -33,6 +33,7 @@ addon | version | summary
 [project_categ_issue](project_categ_issue/) | 8.0.0.1.0 (unported) | Projects Issues can have an allowed category list
 [project_classification](project_classification/) | 8.0.1.0 (unported) | Project classification (easy hierarchy and setup for project managers)
 [project_closing](project_closing/) | 8.0.0.1.1 (unported) | Project closing
+[project_double_alias](project_double_alias/) | 9.0.1.0.0 (unported) | Define an alias for tasks and another alias for issues
 [project_functional_block](project_functional_block/) | 1.2 (unported) | Project requiring functional blocks
 [project_gtd](project_gtd/) | 8.0.2.0.0 (unported) | Personal Tasks, Contexts, Timeboxes
 [project_issue_baseuser](project_issue_baseuser/) | 8.0.1.0.0 (unported) | Extend Project user roles to support more complex use cases
@@ -52,4 +53,4 @@ addon | version | summary
 
 Translation Status
 ------------------
-[![Transifex Status](https://www.transifex.com/projects/p/OCA-project-9-0/chart/image_png)](https://www.transifex.com/projects/p/OCA-project-9-0)
+[![Transifex Status](https://www.transifex.com/projects/p/OCA-project-10-0/chart/image_png)](https://www.transifex.com/projects/p/OCA-project-10-0)
