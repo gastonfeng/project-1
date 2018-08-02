@@ -10,6 +10,6 @@
     "category": "Project",
     "website": "https://github.com/OCA/project/",
     "depends": ["project"],
-    "installable": True,
+    "installable": False,
     "uninstall_hook": "uninstall_hook"
 }

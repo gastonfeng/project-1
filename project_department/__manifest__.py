@@ -12,4 +12,5 @@
         "project",
     ],
     "data": ["views/project.xml"],
+    "installable": False,
 }

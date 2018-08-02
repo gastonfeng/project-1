@@ -16,4 +16,5 @@
         "views/project_key_views.xml",
     ],
     "post_init_hook": "post_init_hook",
+    "installable": False,
 }

@@ -9,7 +9,7 @@
     "author": "SMDrugstore, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "application": False,
-    "installable": True,
+    "installable": False,
     "depends": [
         "project",
         "project_stage_state",

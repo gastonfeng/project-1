@@ -17,5 +17,5 @@
         'views/project_view.xml',
         'data/project_data.xml',
     ],
-    'installable': True,
+    'installable': False,
 }

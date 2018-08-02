@@ -14,6 +14,6 @@
     'data': [
         'views/project_task_view.xml'
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
 }

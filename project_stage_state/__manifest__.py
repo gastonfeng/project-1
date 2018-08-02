@@ -9,7 +9,7 @@
     'website': 'https://github.com/OCA/project-service',
     'license': 'AGPL-3',
     'application': False,
-    'installable': True,
+    'installable': False,
     'depends': [
         'project',
     ],
