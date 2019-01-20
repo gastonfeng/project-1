@@ -4,7 +4,7 @@
 
 {
     'name': 'Partner in timesheets from tasks',
-    'version': '8.0.1.0.0',
+    'version': '1.0',
     'license': 'AGPL-3',
     'summary': 'Propagate task partner to timesheet entries',
     'category': 'Project Management',
@@ -16,6 +16,6 @@
         'analytic_partner',
         'project_timesheet',
     ],
-    'installable': False,
+    'installable': True,
     "auto_install": False,
 }

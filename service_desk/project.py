@@ -18,10 +18,10 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, orm
+from openerp import fields, models
 
 
-class ProjectProject(orm.Model):
+class ProjectProject(models.Model):
     _inherit = 'project.project'
     _columns = {
         'use_analytic_account': fields.selection(
@@ -33,7 +33,7 @@ class ProjectProject(orm.Model):
         }
 
 
-class ProjectTask(orm.Model):
+class ProjectTask(models.Model):
     """
     Add related ``Analytic Account`` and service ``Location``.
     A Location can be any Contact Partner of the AA's Partner.

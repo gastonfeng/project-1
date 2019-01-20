@@ -18,10 +18,10 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, orm
+from openerp import fields, models
 
 
-class project_task_cause(orm.Model):
+class project_task_cause(models.Model):
     _name = 'project.task.cause'
     _description = 'Issue Cause'
     _order = 'sequence'

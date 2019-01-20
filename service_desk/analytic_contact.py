@@ -18,10 +18,10 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, orm
+from openerp import fields, models
 
 
-class AnalyticAccount(orm.Model):
+class AnalyticAccount(models.Model):
     """Add Contact to Analytic Accounts"""
     _inherit = 'account.analytic.account'
     _columns = {

@@ -20,10 +20,10 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, orm
+from openerp import fields, models
 
 
-class project_functional_block(orm.Model):
+class project_functional_block(models.Model):
     _name = 'project.functional.block'
     _description = 'Functional block to organize projects tasks'
 
@@ -58,7 +58,7 @@ class project_functional_block(orm.Model):
     _order = 'parent_id, sequence, name'
 
 
-class project_task(orm.Model):
+class project_task(models.Model):
     _inherit = 'project.task'
     _columns = {
         'functional_block_id': fields.many2one(

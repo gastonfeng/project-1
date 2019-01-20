@@ -18,10 +18,10 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, orm
+from openerp import fields, models
 
 
-class ProjectProject(orm.Model):
+class ProjectProject(models.Model):
     _inherit = 'project.project'
     _columns = {
         'task_categ_id': fields.many2one(
@@ -29,7 +29,7 @@ class ProjectProject(orm.Model):
         }
 
 
-class ProjectCategory(orm.Model):
+class ProjectCategory(models.Model):
     _inherit = 'project.category'
 
     def _name_get(self, cr, uid, ids, context=None):
@@ -55,7 +55,7 @@ class ProjectCategory(orm.Model):
     _order = 'parent_id,name'
 
 
-class ProjectTask(orm.Model):
+class ProjectTask(models.Model):
     _inherit = 'project.task'
 
     def onchange_project(self, cr, uid, id, project_id, context=None):
