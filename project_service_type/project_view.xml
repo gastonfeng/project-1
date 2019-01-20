@@ -32,7 +32,7 @@
         <field name="view_id" ref="view_service_type_list"/>
     </record>
     
-    <menuitem parent="project.menu_definitions" id="menu_service_type" action="action_service_type"/>
+    <menuitem parent="project.menu_main_pm" id="menu_service_type" action="action_service_type"/>
     
     <record id="edit_project" model="ir.ui.view">
         <field name="name">project.project.form</field>

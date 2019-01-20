@@ -41,7 +41,7 @@
       <field name="view_id" ref="view_project_classification_list"/>
     </record>
 
-    <menuitem id="menu_project_classification" action="action_project_classification_form" parent="base.menu_definitions"/>
+    <menuitem id="menu_project_classification" action="action_project_classification_form" parent="project.menu_main_pm"/>
 
     <record id="edit_project" model="ir.ui.view">
       <field name="name">project.project.form</field>

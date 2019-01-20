@@ -47,7 +47,7 @@
 
         <menuitem action="open_task_cause_form"
                   id="menu_task_cause_view"
-                  parent="base.menu_definitions"/>
+                  parent="project.menu_main_pm"/>
 
     </data>
 </openerp>
