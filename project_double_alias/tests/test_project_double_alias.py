@@ -1,21 +1,27 @@
 # -*- coding: utf-8 -*-
-# © 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
+# Copyright 2016-2017 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl-3.html).
 
-from openerp.tests import common
-from openerp import exceptions
+from odoo.tests import common
+from odoo import exceptions
 from ..hooks import post_init_hook, uninstall_hook
 
 
-class TestProjectDoubleAlias(common.TransactionCase):
-    def setUp(self):
-        super(TestProjectDoubleAlias, self).setUp()
-        self.project = self.env['project.project'].create({
+class TestProjectDoubleAlias(common.SavepointCase):
+    @classmethod
+    def setUpClass(cls):
+        super(TestProjectDoubleAlias, cls).setUpClass()
+        cls.project = cls.env['project.project'].create({
             'name': 'Test project',
-            'second_alias_name': 'test',
+            'use_tasks': True,
+            'use_issues': True,
+            'second_alias_name': 'test_second',
         })
-        self.issue_model = self.env['ir.model'].search(
+        cls.issue_model = cls.env['ir.model'].search(
             [('model', '=', 'project.issue')])
+        cls.env['ir.config_parameter'].set_param(
+            "mail.catchall.domain", "test.com",
+        )
 
     def test_second_alias(self):
         self.assertTrue(self.project.second_alias_id)
@@ -26,8 +32,10 @@ class TestProjectDoubleAlias(common.TransactionCase):
         self.assertEqual(self.project.second_alias_id.alias_parent_thread_id,
                          self.project.id)
         self.project.alias_contact = 'followers'
-        self.assertEqual(
-            self.project.second_alias_id.alias_contact, 'followers')
+        second_alias = self.project.second_alias_id
+        self.assertEqual(second_alias.alias_contact, 'followers')
+        self.project.unlink()
+        self.assertFalse(second_alias.exists())
 
     def test_change_second_alias(self):
         self.project.second_alias_name = 'Test 2'
@@ -58,7 +66,7 @@ class TestProjectDoubleAlias(common.TransactionCase):
         with self.assertRaises(exceptions.ValidationError):
             self.env['project.project'].create({
                 'name': 'Test project 2',
-                'second_alias_name': 'test',
+                'second_alias_name': 'test_second',
             })
 
     def test_hooks(self):
@@ -77,3 +85,17 @@ class TestProjectDoubleAlias(common.TransactionCase):
         self.assertFalse(project2.alias_id.alias_name)
         self.assertEqual(project2.second_alias_id.alias_name, 'test-2')
         self.assertTrue(project3.second_alias_id)
+
+    def test_reply_to(self):
+        issue = self.env['project.issue'].create({
+            'project_id': self.project.id,
+            'name': 'Test issue',
+        })
+        reply = issue.message_get_reply_to(issue.ids)
+        self.assertIn(self.project.second_alias_name, reply[issue.id])
+        task = self.env['project.task'].create({
+            'project_id': self.project.id,
+            'name': 'Test task',
+        })
+        reply = task.message_get_reply_to(task.ids)
+        self.assertIn(self.project.alias_name, reply[task.id])
