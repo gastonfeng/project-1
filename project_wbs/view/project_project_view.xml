@@ -179,8 +179,7 @@
                               context="{
                               'default_parent_id':analytic_account_id,
                               'default_partner_id':partner_id,
-                              'default_user_id':user_id,
-                              'default_use_tasks':use_tasks
+                              'default_user_id':user_id
                               }"/>
                         </group>
                         <tree string="Work Breakdown Structure" editable="bottom">
