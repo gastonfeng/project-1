@@ -24,22 +24,11 @@ from openerp import fields, models
 class ProjectIssue(models.Model):
     _inherit = 'project.issue'
 
-    _columns = {
-        'analytic_account_id': fields.many2one(
-            'account.analytic.account', 'Contract/Analytic',
-            domain="[('type','in',['normal','contract'])]"),
-        'analytic_partner_id': fields.related(
-            'analytic_account_id', 'partner_id', relation='res.partner',
-            type='many2one', string="Analytic Account Partner", store=True),
-        'location_id': fields.many2one(
-            'res.partner', 'Location',
-            domain="[('parent_id','child_of',analytic_partner_id)]"),
-        'use_analytic_account': fields.related(
-            'project_id', 'use_analytic_account',
-            type='char', string="Use Analytic Account"),
-        'project_code': fields.related(
-            'project_id', 'code', type='char', string="Project Code"),
-        }
+    analytic_account_id= fields.Many2one(        'account.analytic.account', 'Contract/Analytic',        domain="[('type','in',['normal','contract'])]")
+    analytic_partner_id= fields.Many2one(     related=   'analytic_account_id.partner_id', relation='res.partner',        type='many2one', string="Analytic Account Partner", store=True)
+    location_id= fields.Many2one(        'res.partner', 'Location',        domain="[('parent_id','child_of',analytic_partner_id)]")
+    use_analytic_account= fields.Char(related=        'project_id.use_analytic_account',        type='char', string="Use Analytic Account")
+    project_code= fields.Char(related=        'project_id.code', type='char', string="Project Code")
 
     _defaults = {
         # In self-service issues the default Contact is the current user

@@ -48,12 +48,7 @@ class ProjectIssue(models.Model):
                 res['value']['issue_categ_id'] = obj.issue_categ_id.id
         return res
 
-    _columns = {
-        'issue_categ_id': fields.related(
-            'project_id', 'issue_categ_id', string="Category Root",
-            type='many2one', relation='project.category', readonly=True),
-        'categ_ids': fields.many2many(
-            'project.category', string='Tags',
-            domain="[('id','child_of',issue_categ_id)"
-                   ",('id','!=',issue_categ_id)]"),
-        }
+    issue_categ_id= fields.Many2one(related=        'project_id.issue_categ_id', string="Category Root",        type='many2one', relation='project.category', readonly=True)
+    categ_ids= fields.Many2many(        'project.category', string='Tags',
+        domain="[('id','child_of',issue_categ_id)"
+               ",('id','!=',issue_categ_id)]")

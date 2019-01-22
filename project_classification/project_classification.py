@@ -32,7 +32,7 @@ class ProjectClassification(models.Model):
                                  "when choosing this classification in "
                                  "a project.",
                                  required=True)
-    to_invoice = fields.Many2one('hr_timesheet_invoice.factor',
+    to_invoice = fields.Char(#'hr_timesheet_invoice.factor',
                                  'Reinvoice Costs',
                                  help="Fill this field if you plan to "
                                  "automatically generate invoices based "

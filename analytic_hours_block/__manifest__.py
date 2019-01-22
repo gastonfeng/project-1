@@ -39,7 +39,6 @@ you can track and follow how much has been used.
     "website": "http://www.camptocamp.com",
     "depends": [
         "account",
-        "hr_timesheet_invoice",
         "analytic",
         "project",
         ],

@@ -42,19 +42,10 @@ class ProjectTask(models.Model):
     modules implementing these other possibilities are very welcome.
     """
     _inherit = 'project.task'
-    _columns = {
-        'analytic_account_id': fields.many2one(
-            'account.analytic.account', 'Contract/Analytic',
-            domain="[('type','in',['normal','contract'])]"),
-        'location_id': fields.many2one(
-            'res.partner', 'Location',
-            domain="[('parent_id','child_of',partner_id)]"),
-        'use_analytic_account': fields.related(
-            'project_id', 'use_analytic_account',
-            type='char', string="Use Analytic Account"),
-        'project_code': fields.related(
-            'project_id', 'code', type='char', string="Project Code"),
-        }
+    analytic_account_id= fields.Many2one(        'account.analytic.account', 'Contract/Analytic',        domain="[('type','in',['normal','contract'])]")
+    location_id= fields.Many2one(        'res.partner', 'Location',        domain="[('parent_id','child_of',partner_id)]")
+    use_analytic_account= fields.Char(related=        'project_id.use_analytic_account',        type='char', string="Use Analytic Account")
+    project_code= fields.Char(related=        'project_id.code', type='char', string="Project Code")
 
     def onchange_project(self, cr, uid, id, project_id, context=None):
         # on_change is necessary to populate fields on Create, before saving

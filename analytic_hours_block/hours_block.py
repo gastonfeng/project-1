@@ -214,202 +214,110 @@ class AccountHoursBlock(models.Model):
             10),
     }
 
-    _columns = {
-        'amount_hours_block': fields.function(
-            _compute,
-            type='float',
-            string='Quantity / Amount bought',
-            store=_recompute_triggers,
-            multi='amount_hours_block_delta',
+    amount_hours_block= fields.Float(compute=            '_compute',            type='float',            string='Quantity / Amount bought',            store=_recompute_triggers,            multi='amount_hours_block_delta',
             help="Amount bought by the customer. "
                  "This amount is expressed in the base Unit of Measure "
-                 "(factor=1.0)"),
-        'amount_hours_block_done': fields.function(
-            _compute,
-            type='float',
-            string='Quantity / Amount used',
-            store=_recompute_triggers,
-            multi='amount_hours_block_delta',
+                 "(factor=1.0)")
+    amount_hours_block_done= fields.Float(compute=            '_compute',            type='float',            string='Quantity / Amount used',            store=_recompute_triggers,            multi='amount_hours_block_delta',
             help="Amount done by the staff. "
                  "This amount is expressed in the base Unit of Measure "
-                 "(factor=1.0)"),
-        'amount_hours_block_delta': fields.function(
-            _compute,
-            type='float',
-            string='Difference',
-            store=_recompute_triggers,
-            multi='amount_hours_block_delta',
+                 "(factor=1.0)")
+    amount_hours_block_delta= fields.Float(compute=            '_compute',            type='float',            string='Difference',            store=_recompute_triggers,            multi='amount_hours_block_delta',
             help="Difference between bought and used. "
                  "This amount is expressed in the base Unit of Measure "
-                 "(factor=1.0)"),
-        'last_action_date': fields.function(
-            _get_last_action,
-            type='date',
-            string='Last action date',
+                 "(factor=1.0)")
+    last_action_date= fields.Date(compute=            '_get_last_action',            type='date',            string='Last action date',
             help="Date of the last analytic line linked to the invoice "
-                 "related to this block hours."),
-        'close_date': fields.date('Closed Date'),
-        'invoice_id': fields.many2one(
-            'account.invoice',
-            'Invoice',
-            ondelete='cascade',
-            required=True),
-        'type': fields.selection(
-            [('hours', 'Hours'),
-             ('amount', 'Amount')],
-            string='Type of Block',
-            required=True,
+                 "related to this block hours.")
+    close_date= fields.Date('Closed Date')
+    invoice_id= fields.Many2one(            'account.invoice',            'Invoice',            ondelete='cascade',            required=True)
+    type= fields.Selection(            [('hours', 'Hours'),             ('amount', 'Amount')],            string='Type of Block',            required=True,
             help="The block is based on the quantity of hours "
-                 "or on the amount."),
+                 "or on the amount.")
 
         # Invoices related infos
-        'date_invoice': fields.related(
-            'invoice_id', 'date_invoice',
-            type="date",
-            string="Invoice Date",
-            store={
+    date_invoice= fields.Date(related=            'invoice_id.date_invoice',            type="date",            string="Invoice Date",            store={
                 'account.hours.block': (lambda self, cr, uid, ids, c=None: ids,
                                         ['invoice_id'], 10),
                 'account.invoice': (_get_invoice, ['date_invoice'], 10),
             },
-            readonly=True),
-        'user_id': fields.related(
-            'invoice_id', 'user_id',
-            type="many2one",
-            relation="res.users",
-            string="Salesman",
-            store={
+            readonly=True)
+    user_id= fields.Many2one(related=            'invoice_id.user_id',            type="many2one",            relation="res.users",            string="Salesman",            store={
                 'account.hours.block': (lambda self, cr, uid, ids, c=None: ids,
                                         ['invoice_id'], 10),
                 'account.invoice': (_get_invoice, ['user_id'], 10),
             },
-            readonly=True),
-        'partner_id': fields.related(
-            'invoice_id', 'partner_id',
-            type="many2one",
-            relation="res.partner",
-            string="Partner",
-            store={
+            readonly=True)
+    partner_id= fields.Many2one(related=            'invoice_id.partner_id',            type="many2one",            relation="res.partner",            string="Partner",            store={
                 'account.hours.block': (lambda self, cr, uid, ids, c=None: ids,
                                         ['invoice_id'], 10),
                 'account.invoice': (_get_invoice, ['partner_id'], 10),
             },
-            readonly=True),
-        'name': fields.related(
-            'invoice_id', 'name',
-            type="char",
-            string="Description",
-            store={
+            readonly=True)
+    name= fields.Char(related=            'invoice_id.name',            type="char",            string="Description",            store={
                 'account.hours.block': (lambda self, cr, uid, ids, c=None: ids,
                                         ['invoice_id'], 10),
                 'account.invoice': (_get_invoice, ['name'], 10),
             },
-            readonly=True),
-        'number': fields.related(
-            'invoice_id', 'number',
-            type="char",
-            string="Number",
-            store={
+            readonly=True)
+    number= fields.Char(related=            'invoice_id.number',            type="char",            string="Number",            store={
                 'account.hours.block': (lambda self, cr, uid, ids, c=None: ids,
                                         ['invoice_id'], 10),
                 'account.invoice': (_get_invoice, ['number'], 10),
             },
-            readonly=True),
-        'journal_id': fields.related(
-            'invoice_id', 'journal_id',
-            type="many2one",
-            relation="account.journal",
-            string="Journal",
-            store={
+            readonly=True)
+    journal_id= fields.Many2one(related=            'invoice_id.journal_id',            type="many2one",            relation="account.journal",            string="Journal",            store={
                 'account.hours.block': (lambda self, cr, uid, ids, c=None: ids,
                                         ['invoice_id'], 10),
                 'account.invoice': (_get_invoice, ['journal_id'], 10),
             },
-            readonly=True),
-        'period_id': fields.related(
-            'invoice_id', 'period_id',
-            type="many2one",
-            relation="account.period",
-            string="Period",
-            store={
+            readonly=True)
+    period_id= fields.Many2one(related=          'invoice_id.period_id',            type="many2one",            relation="account.period",            string="Period",            store={
                 'account.hours.block': (lambda self, cr, uid, ids, c=None: ids,
                                         ['invoice_id'], 10),
                 'account.invoice': (_get_invoice, ['period_id'], 10),
             },
-            readonly=True),
-        'company_id': fields.related(
-            'invoice_id', 'company_id',
-            type="many2one",
-            relation="res.company",
-            string="Company",
-            store={
+            readonly=True)
+    company_id= fields.Many2one(related=             'invoice_id.company_id',            type="many2one",            relation="res.company",            string="Company",            store={
                 'account.hours.block': (lambda self, cr, uid, ids, c=None: ids,
                                         ['invoice_id'], 10),
                 'account.invoice': (_get_invoice, ['company_id'], 10),
             },
-            readonly=True),
-        'currency_id': fields.related(
-            'invoice_id', 'currency_id',
-            type="many2one",
-            relation="res.currency",
-            string="Currency",
-            store={
+            readonly=True)
+    currency_id= fields.Many2one(related=             'invoice_id.currency_id',            type="many2one",            relation="res.currency",            string="Currency",            store={
                 'account.hours.block': (lambda self, cr, uid, ids, c=None: ids,
                                         ['invoice_id'], 10),
                 'account.invoice': (_get_invoice, ['currency_id'], 10),
             },
-            readonly=True),
-        'residual': fields.related(
-            'invoice_id', 'residual',
-            type="float",
-            string="Residual",
-            store={
+            readonly=True)
+    residual= fields.Float(related=              'invoice_id.residual',            type="float",            string="Residual",            store={
                 'account.hours.block': (lambda self, cr, uid, ids, c=None: ids,
                                         ['invoice_id'], 10),
                 'account.invoice': (_get_invoice, ['residual'], 10),
             },
-            readonly=True),
-        'amount_total': fields.related(
-            'invoice_id', 'amount_total',
-            type="float",
-            string="Total",
-            store={
+            readonly=True)
+    amount_total= fields.Float(related=            'invoice_id.amount_total',            type="float",            string="Total",            store={
                 'account.hours.block': (lambda self, cr, uid, ids, c=None: ids,
                                         ['invoice_id'], 10),
                 'account.invoice': (_get_invoice, ['amount_total'], 10),
             },
-            readonly=True),
-        'department_id': fields.related(
-            'invoice_id', 'department_id',
-             type='many2one',
-             relation='hr.department',
-             string='Department',
-            store={
+            readonly=True)
+    department_id= fields.Many2one(related=            'invoice_id.department_id',             type='many2one',             relation='hr.department',             string='Department',            store={
                 'account.hours.block': (lambda self, cr, uid, ids, c=None: ids,
                                         ['invoice_id'], 10),
                 'account.invoice': (_get_invoice, ['department_id'], 10),
             },
-             readonly=True),
+             readonly=True)
 
-        'state': fields.related(
-            'invoice_id', 'state',
-            type='selection',
-            selection=[
-                ('draft', 'Draft'),
-                ('proforma', 'Pro-forma'),
-                ('proforma2', 'Pro-forma'),
-                ('open', 'Open'),
+    state= fields.Selection(related=            'invoice_id.state',            type='selection',            selection=[                ('draft', 'Draft'),                ('proforma', 'Pro-forma'),                ('proforma2', 'Pro-forma'),                ('open', 'Open'),
                 ('paid', 'Paid'),
                 ('cancel', 'Cancelled'),
-            ],
-            string='State',
-            readonly=True,
-            store={
+            ],            string='State',            readonly=True,            store={
                 'account.hours.block': (lambda self, cr, uid, ids, c=None: ids,
                                         ['invoice_id'], 10),
                 'account.invoice': (_get_invoice, ['state'], 10),
-            }),
-    }
+            })
+
 
 
 ############################################################################

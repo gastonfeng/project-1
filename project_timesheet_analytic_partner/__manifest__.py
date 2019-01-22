@@ -14,7 +14,7 @@
     'website': 'http://www.antiun.com',
     'depends': [
         'analytic_partner',
-        'project_timesheet',
+        'hr_timesheet',
     ],
     'installable': True,
     "auto_install": False,
