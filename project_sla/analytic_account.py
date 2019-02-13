@@ -31,7 +31,7 @@ class AnalyticAccount(models.Model):
             'project.sla', string='Service Level Agreement'),
         }
 
-    def _reapply_sla(self, cr, uid, ids, recalc_closed=False, context=None):
+    def _reapply_sla(self,  ids, recalc_closed=False, context=None):
         """
         Force SLA recalculation on open documents that already are subject to
         this SLA Definition.
@@ -39,7 +39,7 @@ class AnalyticAccount(models.Model):
         The ``recalc_closed`` flag allows to also recompute closed documents.
         """
         ctrl_obj = self.pool['project.sla.control']
-        for contract in self.browse(cr, uid, ids, context=context):
+        for contract in self.browse( ids, context=context):
             # for each contract, and for each model under SLA control ...
             ctrl_models = set([sla.control_model for sla in contract.sla_ids])
             for model_name in ctrl_models:
@@ -49,17 +49,17 @@ class AnalyticAccount(models.Model):
                 if 'analytic_account_id' in model._columns:
                     domain = base + [
                         ('analytic_account_id', '=', contract.id)]
-                    doc_ids += model.search(cr, uid, domain, context=context)
+                    doc_ids += model.search( domain, context=context)
                 if 'project_id' in model._columns:
                     domain = base + [
                         ('project_id.analytic_account_id', '=', contract.id)]
-                    doc_ids += model.search(cr, uid, domain, context=context)
+                    doc_ids += model.search( domain, context=context)
                 if doc_ids:
                     model = self.pool[model_name]
-                    docs = model.browse(cr, uid, doc_ids, context=context)
-                    ctrl_obj.store_sla_control(cr, uid, docs, context=context)
+                    docs = model.browse( doc_ids, context=context)
+                    ctrl_obj.store_sla_control( docs, context=context)
         return True
 
-    def reapply_sla(self, cr, uid, ids, context=None):
+    def reapply_sla(self,  ids, context=None):
         """ Reapply SLAs button action """
-        return self._reapply_sla(cr, uid, ids, context=context)
+        return self._reapply_sla( ids, context=context)

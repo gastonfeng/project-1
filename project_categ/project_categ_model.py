@@ -32,16 +32,16 @@ class ProjectProject(models.Model):
 class ProjectCategory(models.Model):
     _inherit = 'project.category'
 
-    def _name_get(self, cr, uid, ids, context=None):
+    def _name_get(self,  ids, context=None):
         res = []
-        rows = self.read(cr, uid, ids, ['name', 'parent_id'], context=context)
+        rows = self.read( ids, ['name', 'parent_id'], context=context)
         for row in rows:
             parent = row['parent_id'] and (row['parent_id'][1] + ' / ') or ''
             res.append((row['id'], parent + row['name']))
         return res
 
-    def _name_get_fnc(self, cr, uid, ids, prop, unknow_none, context=None):
-        return dict(self._name_get(cr, uid, ids, context=context))
+    def _name_get_fnc(self,  ids, prop, unknow_none, context=None):
+        return dict(self._name_get( ids, context=context))
 
     _columns = {
         'parent_id': fields.many2one(
@@ -58,17 +58,17 @@ class ProjectCategory(models.Model):
 class ProjectTask(models.Model):
     _inherit = 'project.task'
 
-    def onchange_project(self, cr, uid, id, project_id, context=None):
+    def onchange_project(self,  id, project_id, context=None):
         # on_change is necessary to populate fields on create, before saving
         try:
             res = super(ProjectTask, self).onchange_project(
-                cr, uid, id, project_id, context) or {}
+                 id, project_id, context) or {}
         except AttributeError:
             res = {}
 
         if project_id:
             obj = self.pool.get('project.project').browse(
-                cr, uid, project_id, context=context)
+                 project_id, context=context)
             if obj.task_categ_id:
                 res.setdefault('value', {})
                 res['value']['task_categ_id'] = obj.task_categ_id.id

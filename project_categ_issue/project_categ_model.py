@@ -32,17 +32,17 @@ class ProjectProject(models.Model):
 class ProjectIssue(models.Model):
     _inherit = 'project.issue'
 
-    def onchange_project(self, cr, uid, id, project_id, context=None):
+    def onchange_project(self,  id, project_id, context=None):
         # on_change is necessary to populate fields on create, before saving
         try:
             res = super(ProjectIssue, self).onchange_project(
-                cr, uid, id, project_id, context) or {}
+                 id, project_id, context) or {}
         except AttributeError:
             res = {}
 
         if project_id:
             obj = self.pool.get('project.project').browse(
-                cr, uid, project_id, context=context)
+                 project_id, context=context)
             if obj.issue_categ_id:
                 res.setdefault('value', {})
                 res['value']['issue_categ_id'] = obj.issue_categ_id.id

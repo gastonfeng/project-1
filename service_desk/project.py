@@ -47,27 +47,27 @@ class ProjectTask(models.Model):
     use_analytic_account= fields.Char(related=        'project_id.use_analytic_account',        type='char', string="Use Analytic Account")
     project_code= fields.Char(related=        'project_id.code', type='char', string="Project Code")
 
-    def onchange_project(self, cr, uid, id, project_id, context=None):
+    def onchange_project(self,  id, project_id, context=None):
         # on_change is necessary to populate fields on Create, before saving
         try:
             # try applying a parent's onchange, may it exist
             res = super(ProjectTask, self).onchange_project(
-                cr, uid, id, project_id, context=context) or {}
+                 id, project_id, context=context) or {}
         except AttributeError:
             res = {}
 
         if project_id:
             obj = self.pool.get('project.project').browse(
-                cr, uid, project_id, context=context)
+                 project_id, context=context)
             res.setdefault('value', {})
             res['value']['use_analytic_account'] = (
                 obj.use_analytic_account or 'no')
         return res
 
-    def onchange_analytic(self, cr, uid, id, analytic_id, context=None):
+    def onchange_analytic(self,  id, analytic_id, context=None):
         res = {}
         model = self.pool.get('account.analytic.account')
-        obj = model.browse(cr, uid, analytic_id, context=context)
+        obj = model.browse( analytic_id, context=context)
         if obj:
             # "contact_id" and "department_id" may be provided by other modules
             fldmap = [  # analytic_account field -> task field

@@ -43,7 +43,7 @@ class TestComputeSlaDate(TransactionCase):
             if context is None:
                 context = {'tz': 'UTC'}
             return model._compute_sla_date(
-                cr, uid, calendar_id, uid, date, hours, context=context)
+                 calendar_id, uid, date, hours, context=context)
 
         self.assertEquals(compute(thursday_8, 2), thursday_10)
 

@@ -26,7 +26,7 @@ class ProjectTask(models.Model):
     _inherit = 'project.task'
 
     def message_post(
-            self, cr, uid, thread_id, body='', subject=None,
+            self,  thread_id, body='', subject=None,
             type='notification', subtype=None, parent_id=False,
             attachments=None, context=None, content_subtype='html', **kwargs):
         """ Overrides mail_thread message_post so that we can write messages

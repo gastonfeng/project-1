@@ -45,22 +45,22 @@ class SLADefinition(models.Model):
         'active': True,
         }
 
-    def _reapply_slas(self, cr, uid, ids, recalc_closed=False, context=None):
+    def _reapply_slas(self,  ids, recalc_closed=False, context=None):
         """
         Force SLA recalculation on all _open_ Contracts for the selected SLAs.
         To use upon SLA Definition modifications.
         """
         contract_obj = self.pool.get('account.analytic.account')
-        for sla in self.browse(cr, uid, ids, context=context):
+        for sla in self.browse( ids, context=context):
             contr_ids = [x.id for x in sla.analytic_ids if x.state == 'open']
             contract_obj._reapply_sla(
-                cr, uid, contr_ids, recalc_closed=recalc_closed,
+                 contr_ids, recalc_closed=recalc_closed,
                 context=context)
         return True
 
-    def reapply_slas(self, cr, uid, ids, context=None):
+    def reapply_slas(self,  ids, context=None):
         """ Reapply SLAs button action """
-        return self._reapply_slas(cr, uid, ids, context=context)
+        return self._reapply_slas( ids, context=context)
 
 
 class SLARules(models.Model):

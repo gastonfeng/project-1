@@ -27,15 +27,15 @@ class project_functional_block(models.Model):
     _name = 'project.functional.block'
     _description = 'Functional block to organize projects tasks'
 
-    def name_get(self, cr, uid, ids, context=None):
+    def name_get(self,  ids, context=None):
         res = []
-        for row in self.read(cr, uid, ids, ['name', 'parent_id'], context=context):
+        for row in self.read( ids, ['name', 'parent_id'], context=context):
             parent = row['parent_id'] and (row['parent_id'][1]+' / ') or ''
             res.append((row['id'], parent + row['name']))
         return res
 
-    def _name_get_fnc(self, cr, uid, ids, prop, unknow_none, context=None):
-        return dict(self.name_get(cr, uid, ids, context=context))
+    def _name_get_fnc(self,  ids, prop, unknow_none, context=None):
+        return dict(self.name_get( ids, context=context))
 
     _columns = {
         'name': fields.char('Name', size=64, required=True, translate=True),

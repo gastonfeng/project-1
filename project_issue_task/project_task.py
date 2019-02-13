@@ -24,12 +24,12 @@ from openerp import fields, models
 class task(models.Model):
     _inherit = "project.task"
 
-    def _fld_issue_id(self, cr, uid, ids, field, arg, context=None):
+    def _fld_issue_id(self,  ids, field, arg, context=None):
         res = {}
         issue_model = self.pool.get('project.issue')
-        for doc in self.browse(cr, uid, ids, context=context):
+        for doc in self.browse( ids, context=context):
             issue_id = issue_model.search(
-                cr, uid, [('task_id', '=', doc.id)], context=context)
+                 [('task_id', '=', doc.id)], context=context)
             if issue_id:
                 res[doc.id] = issue_id[0]
             else:
@@ -44,11 +44,11 @@ class task(models.Model):
         'reason_id': fields.many2one('project.task.cause', 'Problem Cause'),
         }
 
-    def action_close(self, cr, uid, ids, context=None):
+    def action_close(self,  ids, context=None):
         """ On Task Close, also close Issue """
         issue_ids = [x.issue_id.id
-                     for x in self.browse(cr, uid, ids, context=context)
+                     for x in self.browse( ids, context=context)
                      if x.issue_id]
         self.pool.get('project.issue').case_close(
-            cr, uid, issue_ids, context=context)
-        return super(task, self).action_close(cr, uid, ids, context=context)
+             issue_ids, context=context)
+        return super(task, self).action_close( ids, context=context)

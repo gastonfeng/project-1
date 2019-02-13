@@ -13,8 +13,8 @@ class report_sla(models.Model):
 
     # Overridden to automaticaly calculate correct achieved percent for any
     # group result
-    def read_group(self, cr, uid, *args, **kwargs):
-        res = super(report_sla, self).read_group(cr, uid, *args, **kwargs)
+    def read_group(self,  *args, **kwargs):
+        res = super(report_sla, self).read_group( *args, **kwargs)
         for gres in res:
             if 'achieved_count' in gres and 'total_count' in gres:
                 acount = float(gres['achieved_count'])
@@ -22,9 +22,9 @@ class report_sla(models.Model):
                 gres['achieved_perc'] = round((acount / tcount) * 100, 2)
         return res
 
-    def _get_achieved_percent(self, cr, uid, ids, field, arg, context=None):
+    def _get_achieved_percent(self,  ids, field, arg, context=None):
         res = {}.fromkeys(ids, 0.0)
-        for line in self.browse(cr, uid, ids, context=context):
+        for line in self.browse( ids, context=context):
             acount = float(line.achieved_count)
             tcount = float(line.total_count)
             res[line.id] = round((acount / tcount) * 100, 2)

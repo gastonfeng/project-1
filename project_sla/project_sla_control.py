@@ -81,26 +81,26 @@ class SLAControl(models.Model):
             # Future: perfect SLA manual handling
         }
 
-    def write(self, cr, uid, ids, vals, context=None):
+    def write(self,  ids, vals, context=None):
         """
         Update the related Document's SLA State when any of the SLA Control
         lines changes state
         """
         res = super(SLAControl, self).write(
-            cr, uid, ids, vals, context=context)
+             ids, vals, context=context)
         new_state = vals.get('sla_state')
         if new_state:
             # just update sla_state without recomputing the whole thing
             ctx = dict(context) if context else {}
             ctx['__sla_stored__'] = 1
-            for sla in self.browse(cr, uid, ids, context=ctx):
+            for sla in self.browse( ids, context=ctx):
                 doc = self.pool.get(sla.doc_model).browse(
-                    cr, uid, sla.doc_id, context=ctx)
+                     sla.doc_id, context=ctx)
                 if doc.sla_state < new_state:
                     doc.write({'sla_state': new_state})
         return res
 
-    def update_sla_states(self, cr, uid, context=None):
+    def update_sla_states(self,  context=None):
         """
         Updates SLA States, given the current datetime:
         Only works on "open" sla states (watching, warning and will fail):
@@ -111,19 +111,19 @@ class SLAControl(models.Model):
         now = dt.strftime(dt.now(), DT_FMT)
         # SLAs to mark as "will fail"
         control_ids = self.search(
-            cr, uid,
+            
             [('sla_state', 'in', ['2', '3']), ('sla_limit_date', '<', now)],
             context=context)
-        self.write(cr, uid, control_ids, {'sla_state': '4'}, context=context)
+        self.write( control_ids, {'sla_state': '4'}, context=context)
         # SLAs to mark as "warning"
         control_ids = self.search(
-            cr, uid,
+            
             [('sla_state', 'in', ['2']), ('sla_warn_date', '<', now)],
             context=context)
-        self.write(cr, uid, control_ids, {'sla_state': '3'}, context=context)
+        self.write( control_ids, {'sla_state': '3'}, context=context)
         return True
 
-    def _compute_sla_date(self, cr, uid, calendar_id, resource_id,
+    def _compute_sla_date(self,  calendar_id, resource_id,
                           start_date, hours, context=None):
         """
         Return a limit datetime by adding hours to a start_date, honoring
@@ -135,7 +135,7 @@ class SLAControl(models.Model):
 
         cal_obj = self.pool.get('resource.calendar')
         periods = cal_obj._schedule_hours(
-            cr, uid, calendar_id,
+             calendar_id,
             hours,
             day_dt=start_date,
             compute_leaves=True,
@@ -145,7 +145,7 @@ class SLAControl(models.Model):
         end_date = periods[-1][1]
         return end_date
 
-    def _get_computed_slas(self, cr, uid, doc, context=None):
+    def _get_computed_slas(self,  doc, context=None):
         """
         Returns a dict with the computed data for SLAs, given a browse record
         for the target document.
@@ -184,11 +184,11 @@ class SLAControl(models.Model):
                     cal = safe_getattr(
                         doc, 'project_id.resource_calendar_id.id')
                     warn_date = self._compute_sla_date(
-                        cr, uid, cal, res_uid,
+                         cal, res_uid,
                         start_date, l.warn_qty,
                         context=context)
                     lim_date = self._compute_sla_date(
-                        cr, uid, cal, res_uid,
+                         cal, res_uid,
                         warn_date, l.limit_qty - l.warn_qty,
                         context=context)
                     # evaluate sla state
@@ -226,7 +226,7 @@ class SLAControl(models.Model):
                             % (doc.id, repr([x.id for x in sla_ids])))
         return res
 
-    def store_sla_control(self, cr, uid, docs, context=None):
+    def store_sla_control(self,  docs, context=None):
         """
         Used by controlled documents to ask for SLA calculation and storage.
         ``docs`` is a Browse object
@@ -245,7 +245,7 @@ class SLAControl(models.Model):
                 _logger.info('...%d SLAs recomputed for %s' % (ix, doc._name))
             control = {x.sla_line_id.id: x
                        for x in doc.sla_control_ids}
-            sla_recs = self._get_computed_slas(cr, uid, doc, context=ctx)
+            sla_recs = self._get_computed_slas( doc, context=ctx)
             # calc sla control lines
             if sla_recs:
                 slas = []
@@ -281,25 +281,25 @@ class SLAControlled(models.AbstractModel):
             SLA_STATES, string="SLA Status", readonly=True),
         }
 
-    def create(self, cr, uid, vals, context=None):
-        res = super(SLAControlled, self).create(cr, uid, vals, context=context)
-        docs = self.browse(cr, uid, [res], context=context)
+    def create(self,  vals, context=None):
+        res = super(SLAControlled, self).create( vals, context=context)
+        docs = self.browse( [res], context=context)
         self.pool.get('project.sla.control').store_sla_control(
-            cr, uid, docs, context=context)
+             docs, context=context)
         return res
 
-    def write(self, cr, uid, ids, vals, context=None):
+    def write(self,  ids, vals, context=None):
         res = super(SLAControlled, self).write(
-            cr, uid, ids, vals, context=context)
-        docs = [x for x in self.browse(cr, uid, ids, context=context)
+             ids, vals, context=context)
+        docs = [x for x in self.browse( ids, context=context)
                 if (not x.stage_id.fold or x.sla_state not in ['1', '5'])]
         self.pool.get('project.sla.control').store_sla_control(
-            cr, uid, docs, context=context)
+             docs, context=context)
         return res
 
-    def unlink(self, cr, uid, ids, context=None):
+    def unlink(self,  ids, context=None):
         # Unlink and delete all related Control records
-        for doc in self.browse(cr, uid, ids, context=context):
+        for doc in self.browse( ids, context=context):
             vals = [m2m.remove(x.id)[0] for x in doc.sla_control_ids]
             doc.write({'sla_control_ids': vals})
-        return super(SLAControlled, self).unlink(cr, uid, ids, context=context)
+        return super(SLAControlled, self).unlink( ids, context=context)

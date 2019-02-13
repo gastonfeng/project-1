@@ -25,11 +25,11 @@ from openerp import _, models
 class project_issue(models.Model):
     _inherit = 'project.issue'
 
-    def action_create_task(self, cr, uid, ids, context=None):
+    def action_create_task(self,  ids, context=None):
         """
         Create and a related Task for the visit report, and open it's Form.
         """
-        rec = self.browse(cr, uid, ids[0], context)
+        rec = self.browse( ids[0], context)
         assert not rec.task_id, _("A Task is already assigned to the Issue!")
 
         rec_fields = ['project_id', 'analytic_account_id', 'location_id']
@@ -40,7 +40,7 @@ class project_issue(models.Model):
         task_data['categ_ids'] = [(6, 0, [x.id for x in rec.categ_ids])]
 
         task_model = self.pool.get('project.task')
-        task_id = task_model.create(cr, uid, task_data, context=context)
+        task_id = task_model.create( task_data, context=context)
         rec.write({'task_id': task_id}, context=context)
         res = {
             'name': _('Issue Task Report'),
@@ -51,12 +51,12 @@ class project_issue(models.Model):
             'type': 'ir.actions.act_window'}
         return res
 
-    def case_cancel(self, cr, uid, ids, context=None):
+    def case_cancel(self,  ids, context=None):
         """ On Issue Cancel, also Cancel Task """
         task_ids = [issue.task_id.id
-                    for issue in self.browse(cr, uid, ids, context=context)
+                    for issue in self.browse( ids, context=context)
                     if issue.task_id]
         self.pool.get('project.task').case_cancel(
-            cr, uid, task_ids, context=context)
+             task_ids, context=context)
         return super(project_issue, self).case_cancel(
-            cr, uid, ids, context=context)
+             ids, context=context)
