@@ -2,8 +2,9 @@
 # License LGPLv3.0 or later (https://www.gnu.org/licenses/lgpl-3.0.en.html).
 
 from mock import patch
-from odoo import http
 from odoo.addons.project_key.controllers.main import ProjectBrowser
+
+from odoo import http
 from .test_common import HttpTestCommon
 
 

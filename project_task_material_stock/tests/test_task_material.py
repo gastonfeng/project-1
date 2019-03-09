@@ -3,9 +3,8 @@
 # Copyright 2016 Tecnativa - Vicent Cubells
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
-from odoo.exceptions import UserError
-
 import odoo.tests.common as common
+from odoo.exceptions import UserError
 
 
 @common.at_install(False)

@@ -2,8 +2,8 @@
 # Copyright 2018 - Brain-tec AG - Carlos Jesus Cebrian
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl-3.0).
 
-from .common import TestProjectCases
 from odoo.exceptions import ValidationError
+from .common import TestProjectCases
 
 
 class ProjectTaskMaterial(TestProjectCases):

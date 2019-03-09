@@ -1,8 +1,8 @@
 # Copyright 2016 Tecnativa <vicent.cubells@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from . import models
 from odoo import api, SUPERUSER_ID
+from . import models
 
 
 def create_code_equal_to_id(cr):
